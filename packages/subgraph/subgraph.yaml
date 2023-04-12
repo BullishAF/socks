@@ -1,0 +1,30 @@
+specVersion: 0.0.4
+schema:
+  file: ./src/schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ThisSocks
+    network: localhost
+    source:
+      abi: ThisSocks
+      address: "0xc5a5C42992dECbae36851359345FE25997F5C42d"
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Purpose
+        - Sender
+      abis:
+        - name: ThisSocks
+          file: ./abis/localhost_ThisSocks.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
